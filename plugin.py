@@ -55,3 +55,10 @@ class Base(object):
         notebook = self.chat_control.parent_win.notebook
         current_page = notebook.get_nth_page(notebook.get_current_page())
         notebook.reorder_child(current_page, 0);
+
+    def disconnect_from_chat_control(self):
+        if self.id_ not in self.chat_control.handlers:
+            return
+        if self.chat_control.handlers[self.id_].handler_is_connected(self.id_):
+            self.chat_control.handlers[self.id_].disconnect(self.id_)
+            del self.chat_control.handlers[self.id_]
